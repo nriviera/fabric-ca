@@ -180,7 +180,7 @@ services:
 
   orderer1-org0:
     container_name: orderer1-org0
-    image: hyperledger/fabric-orderer:1.4.0
+    image: hyperledger/fabric-orderer
     environment:
         - ORDERER_HOME=/tmp/hyperledger/orderer
         - ORDERER_HOST=orderer1-org0
@@ -197,5 +197,51 @@ services:
         - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
     volumes:
         - /tmp/hyperledger/org0/orderer:/tmp/hyperledger/org0/orderer/
+    networks:
+        - fabric-ca
+
+  cli-org1:
+    container_name: cli-org1
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    environment:
+        - GOPATH=/opt/gopath
+        - FABRIC_LOGGING_SPEC=DEBUG
+        - CORE_PEER_ID=cli
+        - CORE_PEER_ADDRESS=peer1-org1:7051
+        - CORE_PEER_LOCALMSPID=org1MSP
+        - CORE_PEER_TLS_ENABLED=true
+        - CORE_PEER_TLS_ROOTCERT_FILE=/tmp/hyperledger/org1/peer1/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem
+        - CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/org1/peer1/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/org1
+    command: sh
+    volumes:
+        - /tmp/hyperledger/org1/peer1:/tmp/hyperledger/org1/peer1
+        - /tmp/hyperledger/org1/peer1/assets/chaincode:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
+        - /tmp/hyperledger/org1/admin:/tmp/hyperledger/org1/admin
+    networks:
+        - fabric-ca
+
+  cli-org2:
+    container_name: cli-org2
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    environment:
+        - GOPATH=/opt/gopath
+        - FABRIC_LOGGING_SPEC=DEBUG
+        - CORE_PEER_ID=cli
+        - CORE_PEER_ADDRESS=peer1-org2:7051
+        - CORE_PEER_LOCALMSPID=org2MSP
+        - CORE_PEER_TLS_ENABLED=true
+        - CORE_PEER_TLS_ROOTCERT_FILE=/tmp/hyperledger/org2/peer1/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem
+        - CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/org2/peer1/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/org2
+    command: sh
+    volumes:
+        - /tmp/hyperledger/org2/peer1:/tmp/hyperledger/org2/peer1
+        - /tmp/hyperledger/org1/peer1/assets/chaincode:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
+        - /tmp/hyperledger/org2/admin:/tmp/hyperledger/org2/admin
     networks:
         - fabric-ca
