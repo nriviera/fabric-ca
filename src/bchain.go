@@ -52,22 +52,22 @@ func main() {
 	// Definition of the Fabric SDK properties
 	fSetup := blockchain.FabricSetup{
 		// Network parameters
-		OrdererID: "orderer.example.com",
+		OrdererID: "orderer1-org0",
 
 		// Channel parameters
 		ChannelID:     "mychannel",
-		ChannelConfig: "/Users/cornoro/projects/aws/anti_piracy/sls_backend/resources/blockchain/config/channel.tx",
+		ChannelConfig: "/tmp/hyperledger/org0/orderer/channel.tx",
 
 		// Chaincode parameters
 		ChainCodeID:     "acmebc",
 		ChaincodeGoPath: os.Getenv("GOPATH"),
-		ChaincodePath:   "skygit.it.nttdata-emea.com/antipiracy/chaincode/",
-		OrgAdmin:        "Admin",
+		ChaincodePath:   "github.com/nriviera/fabric-ca/chaincode/",
+		OrgAdmin:        "admin-org1",
 		OrgName:         "org1",
 		ConfigFile:      *cfgFile,
 
 		// User parameters
-		UserName: "User1",
+		UserName: "user-org1",
 	}
 
 	if initPtr != nil && *initPtr {
