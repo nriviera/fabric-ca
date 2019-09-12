@@ -1,7 +1,9 @@
 .PHONY: build clean
 
 build:
-	env go build -ldflags="-s -w" -o ./bin/bchain src/bchain.go
+	cd src && \
+	go build -ldflags="-s -w" -o ../bin/bchain bchain.go
+	
 
 clean:
 	rm -rf ./bin
