@@ -27,3 +27,5 @@ build:
 clean:
 	rm -rf ./bin
 	rm -rf /tmp/hyperledger
+	rm -rf /tmp/client-config.yaml
+	rm -rf /tmp/crypto-config

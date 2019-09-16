@@ -7,4 +7,4 @@ fabric-ca-client enroll -d -u https://rca-org1-admin:rca-org1-adminpw@0.0.0.0:70
 fabric-ca-client register -d --id.name peer1-org1 --id.secret peer1PW --id.type peer -u https://0.0.0.0:7054
 fabric-ca-client register -d --id.name peer2-org1 --id.secret peer2PW --id.type peer -u https://0.0.0.0:7054
 fabric-ca-client register -d --id.name admin-org1 --id.secret org1AdminPW --id.type user --id.attrs "hf.Registrar.Roles=client,hf.Registrar.Attributes=*,hf.Revoker=true" -u https://0.0.0.0:7054
-fabric-ca-client register -d --id.name user-org1 --id.secret org1UserPW --id.type user -u https://0.0.0.0:7054
+fabric-ca-client register -d --id.name user-org1 --id.secret org1UserPW --id.type client -u https://0.0.0.0:7054
