@@ -54,11 +54,16 @@ function orgPeer() {
 function orgUser() {
     mkdir -p $1/$2/users/$3-$2@$2/tls
     cp $1/$2/tlsca/tls-ca-cert.pem $1/$2/users/$3-$2@$2/tls/ca.crt
-    cp /tmp/hyperledger/$2/$3/msp/signcerts/cert.pem $1/$2/users/$3-$2@$2/tls/server.crt
-    cp /tmp/hyperledger/$2/$3/msp/keystore/*_sk $1/$2/users/$3-$2@$2/tls/server.key
+    cp /tmp/hyperledger/$2/admin/msp/signcerts/cert.pem $1/$2/users/$3-$2@$2/tls/server.crt
+    cp /tmp/hyperledger/$2/admin/msp/keystore/*_sk $1/$2/users/$3-$2@$2/tls/server.key
     cp -r /tmp/hyperledger/$2/$3/msp $1/$2/users/$3-$2@$2/
     rm -f $1/$2/users/$3-$2@$2/msp/Issuer*
     rm -rf $1/$2/users/$3-$2@$2/msp/user
+    mv $1/$2/users/$3-$2@$2/msp/signcerts/cert.pem $1/$2/users/$3-$2@$2/msp/signcerts/$3-$2@$2-cert.pem
+    mv $1/$2/users/$3-$2@$2/msp/cacerts/*.pem $1/$2/users/$3-$2@$2/msp/cacerts/ca-cert.pem
+    adm=admin
+    mkdir -p $1/$2/users/$3-$2@$2/msp/admincerts
+    cp $1/$2/users/$adm-$2@$2/msp/signcerts/* $1/$2/users/$3-$2@$2/msp/admincerts
 }
 
 rm -rf $1/crypto-config
@@ -73,4 +78,5 @@ peerMSP $BASE_PEER org1
 orgPeer $BASE_PEER org1 peer1
 orgPeer $BASE_PEER org1 peer2
 orgUser $BASE_PEER org1 admin
+orgUser $BASE_PEER org1 user
 cp ../resources/client-config.yaml /tmp/
