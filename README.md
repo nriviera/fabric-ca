@@ -37,4 +37,4 @@ Enter the scripts folder and
 
 ### Build the app
 
-* run ```make build``` from project root folder
+* run ```make build``` from project root folder. Binaries are built in ```bin``` folder
