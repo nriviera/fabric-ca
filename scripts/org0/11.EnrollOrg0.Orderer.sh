@@ -14,12 +14,3 @@ export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org0/orderer/assets/tls-c
 fabric-ca-client enroll -d -u https://orderer1-org0:ordererPW@0.0.0.0:7052 --enrollment.profile tls --csr.hosts orderer1-org0
 f=`ls /tmp/hyperledger/org0/orderer/tls-msp/keystore/`
 ln -s /tmp/hyperledger/org0/orderer/tls-msp/keystore/$f /tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem 
-
-
-echo -e "\nENROLL ORG0 Admin"
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org0/admin
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
-export FABRIC_CA_CLIENT_MSPDIR=msp
-fabric-ca-client enroll -d -u https://admin-org0:org0AdminPW@0.0.0.0:7053
-mkdir -p /tmp/hyperledger/org0/orderer/msp/admincerts
-cp /tmp/hyperledger/org0/admin/msp/signcerts/cert.pem /tmp/hyperledger/org0/orderer/msp/admincerts/org0-admin-cert.pem
