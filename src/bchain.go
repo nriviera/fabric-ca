@@ -45,7 +45,7 @@ func query(args []string, fSetup *blockchain.FabricSetup) {
 func main() {
 	initPtr := flag.Bool("init", false, "initialize blockchain")
 	queryPtr := flag.Bool("invoke", false, "invoke operation")
-	cfgFile := flag.String("config", "/Users/cornoro/projects/aws/anti_piracy/sls_backend/tests/hl-config.yaml", "config file")
+	cfgFile := flag.String("config", "/tmp/client-config.yaml", "config file")
 	userPtr := flag.String("user", "", "user info")
 	flag.Parse()
 

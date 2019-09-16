@@ -4,7 +4,16 @@ This project serves as a basic template to configure a working HyperLedger Fabri
 
 ## Build the network
 
-Enter the scripts folder and
+* Start CAs using
+  ```make run-ca```
+* Setup network using
+  ```make config```
+* Stop CAs using
+  ```make stop```
+* Start the network using
+  ```make run-network```
+
+otherwise you can enter the scripts folder and
 
 * start docker using command  
   ```docker-compose up -d ca-tls rca-org0 rca-org1 rca-org2```
@@ -13,8 +22,19 @@ Enter the scripts folder and
 * run ```03.EnrollOrg2.sh``` to enroll org2 peers and admin
 * run ```04.EnrollOrg0.sh``` to enroll org0 orderer and admin
 * run ```05.Genesis.sh``` to create genesis block and channel transaction
-* run ```05.ClientSetup.sh``` to generate client config
 * stop docker using command
   ```docker-compose down```
 * restart the full configured environment
   ```docker-compose up -d ca-tls rca-org0 rca-org1 rca-org2 peer1-org1 peer2-org1 peer1-org2 peer2-org2 orderer1-org0 cli-org1 cli-org2```
+
+## Build the client
+
+### Generate config
+
+Enter the scripts folder and
+
+* run ```06.ClientSetup.sh /tmp``` to generate client config
+
+### Build the app
+
+* run ```make build``` from project root folder

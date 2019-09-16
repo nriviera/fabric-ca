@@ -1,7 +1,7 @@
 #!/bin/bash
 export PATH=$PATH:/Users/cornoro/projects/hyperledger/fabric-samples/bin
-BASE_PEER=../resources/crypto-config/peerOrganizations
-BASE_ORDERER=../resources/crypto-config/ordererOrganizations
+BASE_PEER=$1/crypto-config/peerOrganizations
+BASE_ORDERER=$1/crypto-config/ordererOrganizations
 
 # $1 base folder
 # $2 org name
@@ -39,13 +39,13 @@ function peerMSP() {
 # $2 org name
 # $3 peer name
 function orgPeer() {
-    mkdir -p $1/$2/peers/$3/tls
-    cp $1/$2/tlsca/tls-ca-cert.pem $1/$2/peers/$3/tls/ca.crt
-    cp /tmp/hyperledger/$2/$3/msp/signcerts/cert.pem $1/$2/peers/$3/tls/server.crt
-    cp /tmp/hyperledger/$2/$3/msp/keystore/*_sk $1/$2/peers/$3/tls/server.key
-    cp -r /tmp/hyperledger/$2/$3/msp $1/$2/peers/$3
-    rm -f $1/$2/peers/$3/msp/Issuer*
-    rm -rf $1/$2/peers/$3/msp/user
+    mkdir -p $1/$2/peers/$3-$2/tls
+    cp $1/$2/tlsca/tls-ca-cert.pem $1/$2/peers/$3-$2/tls/ca.crt
+    cp /tmp/hyperledger/$2/$3/msp/signcerts/cert.pem $1/$2/peers/$3-$2/tls/server.crt
+    cp /tmp/hyperledger/$2/$3/msp/keystore/*_sk $1/$2/peers/$3-$2/tls/server.key
+    cp -r /tmp/hyperledger/$2/$3/msp $1/$2/peers/$3-$2
+    rm -f $1/$2/peers/$3-$2/msp/Issuer*
+    rm -rf $1/$2/peers/$3-$2/msp/user
 }
 
 # $1 base folder
@@ -61,7 +61,7 @@ function orgUser() {
     rm -rf $1/$2/users/$3-$2@$2/msp/user
 }
 
-rm -rf ../resources/crypto-config
+rm -rf $1/crypto-config
 orgStruct $BASE_ORDERER org0
 orgStruct $BASE_PEER org1
 tlsCA $BASE_ORDERER org0
@@ -73,3 +73,4 @@ peerMSP $BASE_PEER org1
 orgPeer $BASE_PEER org1 peer1
 orgPeer $BASE_PEER org1 peer2
 orgUser $BASE_PEER org1 admin
+cp ../resources/client-config.yaml /tmp/
