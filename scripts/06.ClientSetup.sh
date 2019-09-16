@@ -24,7 +24,8 @@ function tlsCA() {
 # $2 org name
 function orgCA() {
     cp /tmp/hyperledger/$2/ca/crypto/ca-cert.pem $1/$2/ca/ca-$2-cert.pem
-    cp /tmp/hyperledger/$2/ca/admin/msp/signcerts/cert.pem $1/$2/ca/$2-cert.pem
+    #cp /tmp/hyperledger/$2/ca/crypto/tls-cert.pem $1/$2/ca/$2-cert.pem
+     cp /tmp/hyperledger/$2/ca/admin/msp/signcerts/cert.pem $1/$2/ca/$2-cert.pem
 }
 
 # $1 base folder
@@ -33,6 +34,9 @@ function peerMSP() {
     cp -r /tmp/hyperledger/genesis/$2/msp/admincerts $1/$2/msp
     cp -r /tmp/hyperledger/genesis/$2/msp/cacerts $1/$2/msp
     cp -r /tmp/hyperledger/genesis/$2/msp/tlscacerts $1/$2/msp
+    rm -f $1/$2/msp/cacerts/0-0-0-0*.pem
+    mv $1/$2/msp/admincerts/* $1/$2/msp/admincerts/admin-$2@$2-cert.pem
+    mv $1/$2/msp/cacerts/* $1/$2/msp/cacerts/ca-$2-cert.pem
 } 
 
 # $1 base folder
@@ -61,9 +65,8 @@ function orgUser() {
     rm -rf $1/$2/users/$3-$2@$2/msp/user
     mv $1/$2/users/$3-$2@$2/msp/signcerts/cert.pem $1/$2/users/$3-$2@$2/msp/signcerts/$3-$2@$2-cert.pem
     mv $1/$2/users/$3-$2@$2/msp/cacerts/*.pem $1/$2/users/$3-$2@$2/msp/cacerts/ca-cert.pem
-    adm=admin
     mkdir -p $1/$2/users/$3-$2@$2/msp/admincerts
-    cp $1/$2/users/$adm-$2@$2/msp/signcerts/* $1/$2/users/$3-$2@$2/msp/admincerts
+    cp $1/$2/users/$3-$2@$2/msp/signcerts/* $1/$2/users/$3-$2@$2/msp/admincerts
 }
 
 rm -rf $1/crypto-config
