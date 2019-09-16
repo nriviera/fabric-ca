@@ -1,4 +1,4 @@
-.PHONY: run-ca run-network config build clean
+.PHONY: run-ca run-network config client-config build clean
 
 run-ca:
 	cd scripts && docker-compose up -d ca-tls rca-org0 rca-org1 rca-org2
@@ -15,6 +15,9 @@ config:
 	cd scripts && ./03.EnrollOrg2.sh
 	cd scripts && ./04.EnrollOrg0.sh
 	cd scripts && ./05.Genesis.sh
+
+client-config:
+	cd scripts && ./06.ClientSetup.sh /tmp
 
 build:
 	cd src && \

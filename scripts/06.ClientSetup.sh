@@ -76,7 +76,7 @@ tlsCA $BASE_ORDERER org0
 tlsCA $BASE_PEER org1
 orgCA $BASE_ORDERER org0
 orgCA $BASE_PEER org1
-peerMSP $BASE_ORDERER org0
+# peerMSP $BASE_ORDERER org0
 peerMSP $BASE_PEER org1
 orgPeer $BASE_PEER org1 peer1
 orgPeer $BASE_PEER org1 peer2
