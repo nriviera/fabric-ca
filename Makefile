@@ -20,8 +20,8 @@ client-config:
 	cd scripts && ./06.ClientSetup.sh /tmp
 
 build:
-	cd src && \
-	go build -ldflags="-s -w" -o ../bin/bchain bchain.go
+	cd src/client && \
+	go build -ldflags="-s -w" -o ../../bin/bchain bchain.go
 	
 
 clean:
