@@ -16,7 +16,7 @@ function install_chaincode() {
     else
         rm -rf /tmp/hyperledger/chaincode
         mkdir -p /tmp/hyperledger/chaincode
-        cp -r src/chaincode/* /tmp/hyperledger/chaincode
+        cp -r ../src/chaincode/* /tmp/hyperledger/chaincode
         echo -e "\n\nInstalling chaincode [$CC_SRC_PATH] version $CC_VERSION"
         
         docker exec -e "CORE_PEER_MSPCONFIGPATH=$CORE_ORG1_MSPCONFIGPATH" -e "CORE_PEER_ADDRESS=peer1-org1:7051" cli-org1 peer chaincode install -n acmebc -v $CC_VERSION -p "$CC_SRC_PATH" -l "$LANGUAGE"

@@ -101,6 +101,9 @@ services:
         - /tmp/hyperledger/org1/peer1:/tmp/hyperledger/org1/peer1
     networks:
         - fabric-ca
+    ports:
+        - 8051:7051
+        - 8053:7053
     links:
         - orderer1-org0
     
@@ -211,6 +214,8 @@ services:
         - /tmp/hyperledger/org0/orderer:/tmp/hyperledger/org0/orderer/
     networks:
         - fabric-ca
+    ports:
+        - 7050:7050
 
   cli-org1:
     container_name: cli-org1

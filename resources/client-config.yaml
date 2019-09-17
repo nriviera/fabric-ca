@@ -199,9 +199,9 @@ orderers:
 peers:
   peer1-org1:
     # this URL is used to send endorsement and query requests
-    url: peer1-org1:7051
+    url: peer1-org1:8051
     # eventUrl is only needed when using eventhub (default is delivery service)
-    eventUrl: peer1-org1:7053
+    eventUrl: peer1-org1:8053
 
     grpcOptions:
       ssl-target-name-override: peer1-org1
@@ -295,8 +295,8 @@ certificateAuthorities:
 entityMatchers:
   peer:
     - pattern: (\w*)peer1-org1(\w*)
-      urlSubstitutionExp: grpcs://0.0.0.0:7051
-      eventUrlSubstitutionExp: grpcs://0.0.0.0:7053
+      urlSubstitutionExp: grpcs://0.0.0.0:8051
+      eventUrlSubstitutionExp: grpcs://0.0.0.0:8053
       sslTargetOverrideUrlSubstitutionExp: peer1-org1
       mappedHost: peer1-org1
     # - pattern: (\w*)peer2-org1(\w*)
