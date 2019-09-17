@@ -67,6 +67,8 @@ function orgUser() {
     mv $1/$2/users/$3-$2@$2/msp/cacerts/*.pem $1/$2/users/$3-$2@$2/msp/cacerts/ca-cert.pem
     mkdir -p $1/$2/users/$3-$2@$2/msp/admincerts
     cp $1/$2/users/$3-$2@$2/msp/signcerts/* $1/$2/users/$3-$2@$2/msp/admincerts
+    fn=`ls $1/$2/users/$3-$2@$2/msp/keystore/`
+    ln -s $1/$2/users/$3-$2@$2/msp/keystore/$fn $1/$2/users/$3-$2@$2/msp/keystore/key.pem
 }
 
 rm -rf $1/crypto-config

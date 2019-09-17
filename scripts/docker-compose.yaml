@@ -1,7 +1,14 @@
 version: '2'
 
+volumes:
+  pgdata:
+  walletstore:
+  grafana-storage:
+  prometheus-storage:
+
 networks:
   fabric-ca:
+  explorer:
 
 services:
   ca-tls:
@@ -275,3 +282,61 @@ services:
         - orderer1-org0
         - peer1-org2
         - peer2-org2
+
+  explorerdb:
+    image: hyperledger/explorer-db
+    container_name: explorerdb
+    hostname: explorerdb
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    volumes:
+      - /tmp/explorer/db/createdb.sh:/docker-entrypoint-initdb.d/createdb.sh
+      - /tmp/explorer/pgdata:/var/lib/postgresql/data
+    networks:
+      - explorer
+
+  proms:
+    container_name: proms
+    image: prom/prometheus
+    volumes:
+      - /tmp/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - /tmp/prometheus/storage:/prometheus
+    ports:
+      - '9090:9090'
+    networks:
+      - explorer
+      - fabric-ca
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    volumes:
+      - /tmp/grafana/grafana-dashboard.json:/var/lib/grafana/dashboards/mydashboard.json
+      - /tmp/grafana/grafana_conf/provisioning:/etc/grafana/provisioning
+      - /tmp/grafana/storage:/var/lib/grafana
+    ports:
+      - '3000:3000'
+    networks:
+      - explorer
+
+  explor:
+    image: hyperledger/explorer
+    container_name: explorer
+    hostname: explorer
+    environment:
+      - DATABASE_HOST=explorerdb
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - DISCOVERY_AS_LOCALHOST=false
+    volumes:
+      - /tmp/explorer/config.json:/opt/explorer/app/platform/fabric/config.json
+      - /tmp/explorer/connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - /tmp/explorer/walletstore:/opt/wallet
+      - /tmp/crypto-config:/tmp/crypto-config
+    command: sh -c "sleep 16&& node /opt/explorer/main.js && tail -f /dev/null"
+    ports:
+      - 8090:8080
+    networks:
+      - explorer

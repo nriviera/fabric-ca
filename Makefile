@@ -32,3 +32,5 @@ clean:
 	rm -rf /tmp/hyperledger
 	rm -rf /tmp/client-config.yaml
 	rm -rf /tmp/crypto-config
+	rm -rf /tmp/explorer
+	rm -rf /tmp/prometheus
