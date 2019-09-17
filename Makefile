@@ -34,3 +34,4 @@ clean:
 	rm -rf /tmp/crypto-config
 	rm -rf /tmp/explorer
 	rm -rf /tmp/prometheus
+	rm -rf /tmp/grafana
