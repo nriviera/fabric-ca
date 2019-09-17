@@ -1,4 +1,4 @@
-.PHONY: run-ca run-network config client-config build clean
+.PHONY: build run-ca run-network config client-config clean
 
 run-ca:
 	cd scripts && docker-compose up -d ca-tls rca-org0 rca-org1 rca-org2

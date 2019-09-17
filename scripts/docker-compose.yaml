@@ -197,8 +197,8 @@ services:
         - ORDERER_GENERAL_TLS_CERTIFICATE=/tmp/hyperledger/org0/orderer/tls-msp/signcerts/cert.pem
         - ORDERER_GENERAL_TLS_PRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
         - ORDERER_GENERAL_TLS_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem]
-        - ORDERER_GENERAL_LOGLEVEL=debug
         - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
+        - ORDERER_GENERAL_LOGLEVEL=debug
     volumes:
         - /tmp/hyperledger/org0/orderer:/tmp/hyperledger/org0/orderer/
     networks:
@@ -224,6 +224,9 @@ services:
         - /tmp/hyperledger/org1/peer1:/tmp/hyperledger/org1/peer1
         - /tmp/hyperledger/org1/peer1/assets/chaincode:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
         - /tmp/hyperledger/org1/admin:/tmp/hyperledger/org1/admin
+        - /tmp/hyperledger/chaincode:/opt/gopath/src/github.com/nriviera/fabric-ca/chaincode
+        - /tmp/crypto-config:/tmp/crypto-config
+
     networks:
         - fabric-ca
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/Users/cornoro/projects/hyperledger/fabric-samples/bin
+export CHANNEL_ID=mychannel
 
 rm -rf /tmp/hyperledger/genesis
 mkdir -p /tmp/hyperledger/genesis/org0/msp/admincerts
@@ -33,4 +34,4 @@ rm -rf /tmp/hyperledger/genesis/org1/msp/signcerts/
 rm -rf /tmp/hyperledger/genesis/org2/msp/signcerts/
 
 configtxgen -profile OrgsOrdererGenesis -outputBlock /tmp/hyperledger/org0/orderer/genesis.block
-configtxgen -profile OrgsChannel -outputCreateChannelTx /tmp/hyperledger/org0/orderer/channel.tx -channelID mychannel
+configtxgen -profile OrgsChannel -outputCreateChannelTx /tmp/hyperledger/org0/orderer/channel.tx -channelID $CHANNEL_ID
