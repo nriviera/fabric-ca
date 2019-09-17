@@ -152,7 +152,7 @@ channels:
 #
 organizations:
   org1:
-    mspid: Org1MSP
+    mspid: org1MSP
     cryptoPath: peerOrganizations/org1/users/{userName}@org1/msp
     peers:
       - peer1-org1

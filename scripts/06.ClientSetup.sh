@@ -72,14 +72,22 @@ function orgUser() {
 rm -rf $1/crypto-config
 orgStruct $BASE_ORDERER org0
 orgStruct $BASE_PEER org1
+orgStruct $BASE_PEER org2
 tlsCA $BASE_ORDERER org0
 tlsCA $BASE_PEER org1
+tlsCA $BASE_PEER org2
 orgCA $BASE_ORDERER org0
 orgCA $BASE_PEER org1
+orgCA $BASE_PEER org2
 # peerMSP $BASE_ORDERER org0
 peerMSP $BASE_PEER org1
+peerMSP $BASE_PEER org2
 orgPeer $BASE_PEER org1 peer1
 orgPeer $BASE_PEER org1 peer2
 orgUser $BASE_PEER org1 admin
 orgUser $BASE_PEER org1 user
+orgPeer $BASE_PEER org2 peer1
+orgPeer $BASE_PEER org2 peer2
+orgUser $BASE_PEER org2 admin
+orgUser $BASE_PEER org2 user
 cp ../resources/client-config.yaml /tmp/

@@ -1,4 +1,4 @@
-.PHONY: build run-ca run-network config client-config clean
+.PHONY: build run-ca run-network config client-config clean channels
 
 run-ca:
 	cd scripts && docker-compose up -d ca-tls rca-org0 rca-org1 rca-org2
@@ -19,11 +19,14 @@ config:
 client-config:
 	cd scripts && ./06.ClientSetup.sh /tmp
 
+channels:
+	cd scripts && ./07.CreateChannel.sh
+	cd scripts && ./08.InstallChaincode.sh 1.0
+
 build:
 	cd src/client && \
 	go build -ldflags="-s -w" -o ../../bin/bchain bchain.go
 	
-
 clean:
 	rm -rf ./bin
 	rm -rf /tmp/hyperledger

@@ -85,8 +85,8 @@ services:
         - CORE_PEER_LOCALMSPID=org1MSP
         - CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/org1/peer1/msp
         - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=guide_fabric-ca
-        - FABRIC_LOGGING_SPEC=debug
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=scripts_fabric-ca
+        - FABRIC_LOGGING_SPEC=info
         - CORE_PEER_TLS_ENABLED=true
         - CORE_PEER_TLS_CERT_FILE=/tmp/hyperledger/org1/peer1/tls-msp/signcerts/cert.pem
         - CORE_PEER_TLS_KEY_FILE=/tmp/hyperledger/org1/peer1/tls-msp/keystore/key.pem
@@ -101,6 +101,8 @@ services:
         - /tmp/hyperledger/org1/peer1:/tmp/hyperledger/org1/peer1
     networks:
         - fabric-ca
+    links:
+        - orderer1-org0
     
   peer2-org1:
     container_name: peer2-org1
@@ -111,8 +113,8 @@ services:
         - CORE_PEER_LOCALMSPID=org1MSP
         - CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/org1/peer2/msp
         - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=guide_fabric-ca
-        - FABRIC_LOGGING_SPEC=grpc=debug:info
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=scripts_fabric-ca
+        - FABRIC_LOGGING_SPEC=info
         - CORE_PEER_TLS_ENABLED=true
         - CORE_PEER_TLS_CERT_FILE=/tmp/hyperledger/org1/peer2/tls-msp/signcerts/cert.pem
         - CORE_PEER_TLS_KEY_FILE=/tmp/hyperledger/org1/peer2/tls-msp/keystore/key.pem
@@ -128,6 +130,8 @@ services:
         - /tmp/hyperledger/org1/peer2:/tmp/hyperledger/org1/peer2
     networks:
         - fabric-ca
+    links:
+        - orderer1-org0
 
   peer1-org2:
     container_name: peer1-org2
@@ -138,8 +142,8 @@ services:
         - CORE_PEER_LOCALMSPID=org2MSP
         - CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/org2/peer1/msp
         - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=guide_fabric-ca
-        - FABRIC_LOGGING_SPEC=debug
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=scripts_fabric-ca
+        - FABRIC_LOGGING_SPEC=info
         - CORE_PEER_TLS_ENABLED=true
         - CORE_PEER_TLS_CERT_FILE=/tmp/hyperledger/org2/peer1/tls-msp/signcerts/cert.pem
         - CORE_PEER_TLS_KEY_FILE=/tmp/hyperledger/org2/peer1/tls-msp/keystore/key.pem
@@ -154,6 +158,8 @@ services:
         - /tmp/hyperledger/org2/peer1:/tmp/hyperledger/org2/peer1
     networks:
         - fabric-ca
+    links:
+        - orderer1-org0
 
   peer2-org2:
     container_name: peer2-org2
@@ -164,8 +170,8 @@ services:
         - CORE_PEER_LOCALMSPID=org2MSP
         - CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/org2/peer2/msp
         - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=guide_fabric-ca
-        - FABRIC_LOGGING_SPEC=debug
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=scripts_fabric-ca
+        - FABRIC_LOGGING_SPEC=info
         - CORE_PEER_TLS_ENABLED=true
         - CORE_PEER_TLS_CERT_FILE=/tmp/hyperledger/org2/peer2/tls-msp/signcerts/cert.pem
         - CORE_PEER_TLS_KEY_FILE=/tmp/hyperledger/org2/peer2/tls-msp/keystore/key.pem
@@ -181,6 +187,8 @@ services:
         - /tmp/hyperledger/org2/peer2:/tmp/hyperledger/org2/peer2
     networks:
         - fabric-ca
+    links:
+        - orderer1-org0
 
   orderer1-org0:
     container_name: orderer1-org0
@@ -198,7 +206,7 @@ services:
         - ORDERER_GENERAL_TLS_PRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
         - ORDERER_GENERAL_TLS_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem]
         - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
-        - ORDERER_GENERAL_LOGLEVEL=debug
+        - ORDERER_GENERAL_LOGLEVEL=info
     volumes:
         - /tmp/hyperledger/org0/orderer:/tmp/hyperledger/org0/orderer/
     networks:
@@ -211,7 +219,7 @@ services:
     stdin_open: true
     environment:
         - GOPATH=/opt/gopath
-        - FABRIC_LOGGING_SPEC=DEBUG
+        - FABRIC_LOGGING_SPEC=INFO
         - CORE_PEER_ID=cli
         - CORE_PEER_ADDRESS=peer1-org1:7051
         - CORE_PEER_LOCALMSPID=org1MSP
@@ -221,14 +229,18 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/org1
     command: sh
     volumes:
-        - /tmp/hyperledger/org1/peer1:/tmp/hyperledger/org1/peer1
+        - /tmp/hyperledger/org1/:/tmp/hyperledger/org1/
         - /tmp/hyperledger/org1/peer1/assets/chaincode:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
         - /tmp/hyperledger/org1/admin:/tmp/hyperledger/org1/admin
         - /tmp/hyperledger/chaincode:/opt/gopath/src/github.com/nriviera/fabric-ca/chaincode
-        - /tmp/crypto-config:/tmp/crypto-config
-
+        - /tmp/crypto-config/peerOrganizations/org1:/tmp/crypto-config/peerOrganizations/org1
+        - /tmp/hyperledger/tls-ca/crypto:/tmp/hyperledger/tls-ca/crypto/
     networks:
         - fabric-ca
+    links:
+        - orderer1-org0
+        - peer1-org1
+        - peer2-org1
 
   cli-org2:
     container_name: cli-org2
@@ -237,7 +249,7 @@ services:
     stdin_open: true
     environment:
         - GOPATH=/opt/gopath
-        - FABRIC_LOGGING_SPEC=DEBUG
+        - FABRIC_LOGGING_SPEC=INFO
         - CORE_PEER_ID=cli
         - CORE_PEER_ADDRESS=peer1-org2:7051
         - CORE_PEER_LOCALMSPID=org2MSP
@@ -247,8 +259,14 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/org2
     command: sh
     volumes:
-        - /tmp/hyperledger/org2/peer1:/tmp/hyperledger/org2/peer1
+        - /tmp/hyperledger/org2:/tmp/hyperledger/org2
         - /tmp/hyperledger/org1/peer1/assets/chaincode:/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode
         - /tmp/hyperledger/org2/admin:/tmp/hyperledger/org2/admin
+        - /tmp/hyperledger/chaincode:/opt/gopath/src/github.com/nriviera/fabric-ca/chaincode
+        - /tmp/crypto-config/peerOrganizations/org2:/tmp/crypto-config/peerOrganizations/org2
     networks:
         - fabric-ca
+    links:
+        - orderer1-org0
+        - peer1-org2
+        - peer2-org2

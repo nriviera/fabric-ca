@@ -31,9 +31,22 @@ otherwise you can enter the scripts folder and
 
 ### Generate config
 
-Enter the scripts folder and
+* Setup client configurations
+  ```make client-config```
+
+otherwise you can enter the scripts folder and
 
 * run ```06.ClientSetup.sh /tmp``` to generate client config
+
+### Build channel and deploy chaincode
+
+* Create and join channel
+  ```make channels```
+
+otherwise you can enter the scripts folder and
+
+* run ```07.CreateChannel.sh``` to create and join channel
+* run ```08.InstallChaincode.sh``` to install and instantiate the chaincode
 
 ### Build the app
 
