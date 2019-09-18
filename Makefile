@@ -26,7 +26,14 @@ channels:
 build:
 	cd src/client && \
 	go build -ldflags="-s -w" -o ../../bin/bchain bchain.go
-	
+
+explorer:
+	cd scripts && ./09.Explorer.sh
+	docker-compose -f scripts/explorer-compose.yaml up -d explorerdb proms grafana explorer
+
+stop-explorer:
+	docker-compose -f scripts/explorer-compose.yaml down -v
+
 clean:
 	rm -rf ./bin
 	rm -rf /tmp/hyperledger
@@ -35,3 +42,4 @@ clean:
 	rm -rf /tmp/explorer
 	rm -rf /tmp/prometheus
 	rm -rf /tmp/grafana
+	rm -rf /tmp/explorer/config.json

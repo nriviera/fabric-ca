@@ -51,3 +51,10 @@ otherwise you can enter the scripts folder and
 ### Build the app
 
 * run ```make build``` from project root folder. Binaries are built in ```bin``` folder
+
+### Start Explorer
+
+* run ```make explorer``` to setup hyperledger explorer
+* point the browser to localhost:9090 and log in with login:admin-org1 password:org1AdminPW
+
+* run ```make stop-explorer``` when done

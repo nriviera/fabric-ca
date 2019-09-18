@@ -9,3 +9,4 @@ cp ../resources/prometheus.yaml /tmp/prometheus
 curl https://raw.githubusercontent.com/hyperledger/blockchain-explorer/master/app/platform/fabric/artifacts/operations/balance-transfer/balance-transfer-grafana-dashboard.json --output /tmp/grafana/grafana-dashboard.json
 cp -r ../resources/grafana_conf /tmp/grafana
 cp -r ../resources/connection-profile /tmp/explorer
+cp ../resources/config.json /tmp/explorer/config.json
